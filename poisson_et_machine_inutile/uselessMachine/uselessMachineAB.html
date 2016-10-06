@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html> 
+    <head>  
+        <meta charset="utf-8">
+        <title>Le titre de la page</title> 
+    </head>  
+    <body  style="background-color:rgb(0,0,0); margin: 0px; overflow: hidden"> 
+       
+        
+        <div style="position:absolute;margin:0; padding:0;width:100%;height:100%">
+            <!-- Créer un élément vidéo -->
+            <video id="lecteurA" style="margin:0; padding:0;" width="100%" height="100%"  >
+                <!-- Définir les sources de la vidéo -->
+                Texte a afficher si le navigateur ne supporte pas la vidéo HTML 5.
+            </video>  <!-- Fin d'un élément vidéo -->
+        </div>
+        <div style="position:absolute;margin:0; padding:0;width:100%;height:100%">
+            <!-- Créer un élément vidéo -->
+            <video id="lecteurB" style="margin:0; padding:0;" width="100%" height="100%"  >
+                <!-- Définir les sources de la vidéo -->
+                Texte a afficher si le navigateur ne supporte pas la vidéo HTML 5.
+            </video>  <!-- Fin d'un élément vidéo -->
+        </div>
+        <script type="text/javascript">
+            
+            /*
+            LECTEUR QUI ALTERNE ENTRE lecteurA et lecteurB pour éviter le noir entre deux vidéos
+            */
+            
+            var lecteurA = document.getElementById("lecteurA");
+            var lecteurB = document.getElementById("lecteurB");
+            var lecteur;
+            
+        
+            function chargerDansLecteurAB(fichierVideo) {
+                if ( lecteur == lecteurA ) {
+                    lecteurA.pause();
+                    lecteurB.src = fichierVideo;
+                    lecteurB.play();
+                    lecteurB.onloadeddata = function() {
+                        lecteurB.style.visibility = 'visible';
+                        lecteurA.style.visibility = 'hidden';
+                    }
+                    lecteur =  lecteurB;
+                    
+                } else  {
+                    
+                    lecteurB.pause();
+                    lecteurA.src = fichierVideo;
+                    lecteurA.play();
+                    lecteurA.onloadeddata = function() {
+                        lecteurA.style.visibility = 'visible';
+                        lecteurB.style.visibility = 'hidden';
+                    }
+                   lecteur =  lecteurA;
+                }
+               
+            }
+             /*
+            GESTION DES VIDEOS
+            */           
+            
+            var cliques = 0;
+           
+            function selectionnerVideo() {
+                
+                if ( cliques < 4 ) {
+                    chargerDansLecteurAB("uselessMachineA.ogv");
+                } else {
+                    chargerDansLecteurAB("uselessMachineB.ogv");
+                    cliques = 0;
+                }
+                
+                cliques++;
+                
+                
+            }
+            
+
+            document.onmousedown = function () {
+                selectionnerVideo();
+            }
+            
+            selectionnerVideo(); 
+             
+                          
+        </script>
+    </body>
+</html>
