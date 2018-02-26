@@ -10,7 +10,6 @@ function setup() {
   gui.add(this, 'rayon', 5, 300);
   gui.addColor(this, 'couleur');
 
-
 }
 
 function draw() {
